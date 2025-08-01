@@ -39,18 +39,18 @@ app.MapPost("/login", (User model)=>{
 
 app.MapGet("anonymous", () =>
 {
-    Results.Ok(new {message = "Qualquer um pode acessar sem Authenticação"});
+    return Results.Ok(new {message = "Qualquer um pode acessar sem Authenticação"});
 }).AllowAnonymous();
 
 app.MapGet("authenticated", (ClaimsPrincipal user) =>
 {
-    Results.Ok(new {message = $"Somente Usuarios autenticados podem acessar!\nUser logado:{user.Identity.Name}"});
+    return Results.Ok(new {message = $"Somente Usuarios autenticados podem acessar!\nUser logado:{user.Identity.Name}"});
 }).RequireAuthorization();
     
 
 app.MapGet("authenticated-admin", (ClaimsPrincipal user) =>
 {
-    Results.Ok(new {message = $"Somente Usuarios autenticados com role admin podem acessar!\nUser logado:{user.Identity.Name}"});
+    return Results.Ok(new {message = $"Somente Usuarios autenticados com role admin podem acessar!\nUser logado:{user.Identity.Name}"});
 }).RequireAuthorization("Admin");
 
 
