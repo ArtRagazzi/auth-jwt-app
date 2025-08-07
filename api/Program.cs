@@ -13,8 +13,10 @@ var builder = WebApplication.CreateBuilder(args);
 var key = Encoding.ASCII.GetBytes(builder.Configuration["JwtSettings:SecretKey"]);
 JwtConfig(builder);
 AuthorizationConfig(builder);
+ConfigureServices(builder);
 
 var app = builder.Build();
+app.UseCors("PermitirFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -114,3 +116,15 @@ void AuthorizationConfig(WebApplicationBuilder builder)
         options.AddPolicy("Normal", policy => policy.RequireRole("normal"));
     });
 }
+
+void ConfigureServices(WebApplicationBuilder builder)
+{
+    builder.Services.AddCors(options=>{
+        options.AddPolicy("PermitirFrontend",policy=>{
+            policy.WithOrigins("http://localhost:5173","http://localhost:5174")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+    });
+}
+

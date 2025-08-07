@@ -15,7 +15,7 @@ function Register() {
                     alt="Imagem Cadastro"
                     className="mb-6 rounded w-150 h-auto"
                 />
-                <h1 className="text-4xl font-bold mb-4">Crie sua conta</h1>
+                <h1 className="text-4xl font-bold mb-4">Cadastrar novo usuário</h1>
                 <p className="text-lg text-center max-w-md">
                     Cadastre-se para começar a usar a plataforma e aproveitar todos os recursos.
                 </p>
@@ -24,7 +24,7 @@ function Register() {
             {/* Painel direito: Formulário (1/3) */}
             <div className="w-1/2 bg-blue-600 flex items-center justify-center p-8 shadow-xl">
                 <form className="w-full max-w-sm space-y-6">
-                    <h2 className="text-2xl font-bold text-white text-center">Cadastro</h2>
+                    <h2 className="text-2xl font-bold text-white text-center">Cadastro de Usuario</h2>
 
                     <div>
                         <label className="block text-white mb-1">Email</label>
@@ -66,13 +66,7 @@ function Register() {
                     >
                         Cadastrar
                     </button>
-
-                    <h2 className="text-center text-white">
-                        Já tem conta?{' '}
-                        <a href="/login" className="text-white underline hover:text-blue-300">
-                            Faça login
-                        </a>
-                    </h2>
+                    
                 </form>
             </div>
         </div>
