@@ -1,10 +1,11 @@
 
 using System.Security.Claims;
 using System.Text;
+using api.Context;
 using api.Models;
-using api.Repositories;
 using api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,43 +20,7 @@ var app = builder.Build();
 app.UseCors("PermitirFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
-
-
-app.MapPost("/login", (User model)=>{
-    var user = UserRepository.FindByEmailAndPassword(model.Email, model.Password);
-
-    if(user == null){
-        return Results.NotFound(new {
-            message = "Invalid email or password"
-        });
-    }
-
-    var token = TokenService.GenerateToken(user, builder.Configuration["JwtSettings:SecretKey"]);
-    user.Password = "";
-
-    return Results.Ok(new {
-        user = user,
-        token = token
-    });
-});
-
-app.MapGet("anonymous", () =>
-{
-    return Results.Ok(new {message = "Qualquer um pode acessar sem Authenticação"});
-}).AllowAnonymous();
-
-app.MapGet("authenticated", (ClaimsPrincipal user) =>
-{
-    return Results.Ok(new {message = $"Somente Usuarios autenticados podem acessar!\nUser logado:{user.Identity.Name}"});
-}).RequireAuthorization();
-    
-
-app.MapGet("authenticated-admin", (ClaimsPrincipal user) =>
-{
-    return Results.Ok(new {message = $"Somente Usuarios autenticados com role admin podem acessar!\nUser logado:{user.Identity.Name}"});
-}).RequireAuthorization("Admin");
-
-
+app.MapControllers();
 
 
 app.Run();
@@ -112,8 +77,8 @@ void AuthorizationConfig(WebApplicationBuilder builder)
 {
     builder.Services.AddAuthorization(options =>
     {
-        options.AddPolicy("Admin", policy => policy.RequireRole("admin"));
-        options.AddPolicy("Normal", policy => policy.RequireRole("normal"));
+        options.AddPolicy("Admin", policy => policy.RequireRole(Roles.Admin.ToString()));
+        options.AddPolicy("Normal", policy => policy.RequireRole(Roles.Normal.ToString()));
     });
 }
 
@@ -126,5 +91,14 @@ void ConfigureServices(WebApplicationBuilder builder)
                 .AllowAnyMethod();
         });
     });
+    
+    builder.Services.AddDbContext<AppDbContext>(options =>
+    {
+        options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    });
+    
+    builder.Services.AddScoped<IUserService, UserService>();
+    
+    builder.Services.AddControllers();
 }
 
