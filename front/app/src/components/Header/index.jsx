@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../services/authService";
-import { BiLogOut } from "react-icons/bi";
+import { BiLogOut,BiHome,BiSolidUserPlus,BiSolidUserDetail    } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -27,12 +27,18 @@ export function Header() {
 
     return (
         <header className="w-full">
-            <nav className="w-full bg-blue-600 h-16 flex items-center justify-between px-6 shadow-md">
+            <nav className="w-full bg-blue-600 h-16 flex items-center justify-between px-22 shadow-md">
                 {/* Links */}
                 <div className="flex gap-6 text-lg font-semibold text-white">
-                    <Link to="/" className="hover:underline">Home</Link>
-                    <Link to="/register" className="hover:underline">Cadastrar Usuário</Link>
-                    <Link to="/users" className="hover:underline">Usuários</Link>
+                    <Link to="/" className="hover:underline">
+                        <BiHome size={32} />
+                    </Link>
+                    <Link to="/register" className="hover:underline">
+                        <BiSolidUserPlus size={32} />
+                    </Link>
+                    <Link to="/users" className="hover:underline">
+                        <BiSolidUserDetail size={32}/>
+                    </Link>
                 </div>
 
                 {/* Saudação + Logout */}

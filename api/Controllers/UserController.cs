@@ -59,5 +59,26 @@ public class UserController :ControllerBase
     {
         return Ok(new { message = $"Somente usuários autenticados com role admin podem acessar! User logado: {User.Identity.Name}" });
     }
+
+
+    [HttpPost("register")]
+    [Authorize(Policy = "Admin")]
+    public async Task<IActionResult> Register([FromBody] User model)
+    {
+        try
+        {
+            if (model != null)
+            {
+                await _userService.Insert(model);
+                return StatusCode(StatusCodes.Status201Created, "Usuario cadastrado com sucesso");
+            }
+
+            return BadRequest("Não foi possivel criar o usuario");
+        }
+        catch
+        { 
+            return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao salvar aluno");
+        }
+    }
     
 }

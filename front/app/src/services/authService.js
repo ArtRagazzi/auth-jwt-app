@@ -25,3 +25,21 @@ export const isAuthenticated = () => {
     return false;
   }
 };
+
+export const isAdmin = () => {
+  const token = localStorage.getItem('token');
+  if (!token) return false;
+
+  try {
+    const payloadBase64 = token.split('.')[1];
+    const payload = JSON.parse(atob(payloadBase64));
+    const now = Math.floor(Date.now() / 1000);
+
+    // verifica se não expirou e se o role é de admin
+    return payload.exp > now && payload.role === "Admin";
+  } catch (e) {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    return false;
+  }
+};
