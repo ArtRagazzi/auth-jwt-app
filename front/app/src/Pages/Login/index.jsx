@@ -57,7 +57,7 @@ function Login() {
                 {/* Painel direito: Formulário (1/3) */}
                 <div className="w-1/3 bg-white flex items-center justify-center p-8 shadow-xl">
                     <form className="w-full max-w-sm space-y-6" onSubmit={handleSubmit}>
-                        <h2 className="text-2xl font-bold text-gray-800 text-center">Login</h2>
+                        <h2 className="text-4xl font-bold text-blue-600 text-center uppercase">Login</h2>
                         <div>
                             <label className="block text-gray-700 mb-1">Email</label>
                             <input
