@@ -80,5 +80,19 @@ public class UserController :ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao salvar aluno");
         }
     }
-    
+
+    [HttpGet("users")]
+    [Authorize]
+    public async Task<ActionResult<IEnumerable<User>>> FindAll()
+    {
+        try
+        {
+            var users = await _userService.FindAll();
+            return Ok(users);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao obter usuarios!");
+        }
+    }
 }
