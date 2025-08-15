@@ -4517,7 +4517,8 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Artur O\\.nuget\\packages\\": {}
+    "C:\\Users\\Artur O\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
@@ -4528,8 +4529,12 @@
       "packagesPath": "C:\\Users\\Artur O\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Artur O\\Documents\\Projects\\auth-jwt-app\\api\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Artur O\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Artur O\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
       ],
       "originalTargetFrameworks": [
         "net9.0"

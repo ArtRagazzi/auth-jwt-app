@@ -83,12 +83,20 @@ public class UserController :ControllerBase
 
     [HttpGet("users")]
     [Authorize]
-    public async Task<ActionResult<IEnumerable<User>>> FindAll()
+    public async Task<ActionResult<IEnumerable<object>>> FindAll()
     {
         try
         {
             var users = await _userService.FindAll();
-            return Ok(users);
+
+            var result = users.Select(user => new 
+            {
+                user.Id,
+                user.Email,
+                user.Role
+            });
+
+            return Ok(result);
         }
         catch (Exception e)
         {

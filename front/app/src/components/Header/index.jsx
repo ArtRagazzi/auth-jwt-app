@@ -36,7 +36,7 @@ export function Header() {
                     <Link to="/register" className="hover:underline">
                         <BiSolidUserPlus size={32} />
                     </Link>
-                    <Link to="/users" className="hover:underline">
+                    <Link to="/user-list" className="hover:underline">
                         <BiSolidUserDetail size={32}/>
                     </Link>
                 </div>

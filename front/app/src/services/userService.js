@@ -23,6 +23,27 @@ const UserService = {
             throw error;
         }
     }
+    ,
+    getUsers: async () => {
+        const token = localStorage.getItem('token');
+        try {
+            const response = await fetch(`${BASE_ENPOINT}/users`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Falha ao obter usuários');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Error fetching users:', error);
+            throw error;
+        }
+    }
 }
 
 export default UserService;
