@@ -17,3 +17,6 @@ Este projeto foi desenvolvido como estudo para implementação de autenticação
 - Armazenamento de dados no SQLite via Entity Framework  
 - Dashboard com gráficos interativos utilizando Chart.js  
 - Consumo da API do backend pelo frontend React  
+
+https://github.com/user-attachments/assets/19ca0d94-1c21-4e3f-993d-8d53362f9c7d
+
