@@ -3,22 +3,37 @@ import { isAdmin } from "../../services/authService";
 import { useEffect, useState } from "react";
 import UserService from "../../services/userService";
 import sem_permissao from "../../assets/images/sem_permissao.jpg";
+import { FaTrash } from "react-icons/fa";
 
 function UserList() {
     const [users, setUsers] = useState([]);
 
+    const fetchUsers = async () => {
+        try {
+            const data = await UserService.getUsers();
+            setUsers(Array.isArray(data) ? data : []);
+        } catch (error) {
+            console.error("Erro ao carregar usuários:", error);
+            setUsers([]);
+        }
+    };
+
     useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const data = await UserService.getUsers();
-                setUsers(Array.isArray(data) ? data : []);
-            } catch (error) {
-                console.error("Erro ao carregar usuários:", error);
-                setUsers([]);
-            }
-        };
         fetchUsers();
     }, []);
+
+    const handleDelete = async (userId) => {
+        if (window.confirm("Tem certeza que deseja excluir este usuário?")) {
+            try {
+                await UserService.deleteUser(userId);
+                // Atualiza lista removendo o usuário localmente
+                setUsers((prev) => prev.filter((u) => u.id !== userId));
+            } catch (error) {
+                console.error("Erro ao excluir usuário:", error);
+                alert("Falha ao excluir usuário");
+            }
+        }
+    };
 
     if (!isAdmin()) {
         return (
@@ -59,6 +74,7 @@ function UserList() {
                                     <th className="px-6 py-3 text-left">ID</th>
                                     <th className="px-6 py-3 text-left">Email</th>
                                     <th className="px-6 py-3 text-left">Role</th>
+                                    <th className="px-6 py-3 text-center">Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,12 +91,20 @@ function UserList() {
                                                     ? "Administrador"
                                                     : "Usuário"}
                                             </td>
+                                            <td className="px-6 py-3 text-center">
+                                                <button
+                                                    onClick={() => handleDelete(user.id)}
+                                                    className="text-red-600 hover:text-red-800 transition"
+                                                >
+                                                    <FaTrash />
+                                                </button>
+                                            </td>
                                         </tr>
                                     ))
                                 ) : (
                                     <tr>
                                         <td
-                                            colSpan="3"
+                                            colSpan="4"
                                             className="px-6 py-4 text-center text-gray-500"
                                         >
                                             Nenhum usuário encontrado

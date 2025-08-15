@@ -103,4 +103,23 @@ public class UserController :ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao obter usuarios!");
         }
     }
+    
+    
+    [HttpDelete("users/{id}")]
+    [Authorize(Policy = "Admin")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
+        {
+            await _userService.Delete(id);
+            return Ok(new { message = "Usuário deletado com sucesso" });
+        }
+        catch (Exception ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+    }
+    
+    
+    
 }

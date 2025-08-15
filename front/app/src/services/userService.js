@@ -43,6 +43,26 @@ const UserService = {
             console.error('Error fetching users:', error);
             throw error;
         }
+    },
+    deleteUser: async (userId) => {
+        const token = localStorage.getItem('token');
+        try {
+            const response = await fetch(`${BASE_ENPOINT}/users/${userId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Falha ao excluir usuário');
+            }
+            return await response.text();
+        } catch (error) {
+            console.error('Error deleting user:', error);
+            throw error;
+        }
     }
 }
 
